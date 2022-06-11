@@ -10,7 +10,17 @@
 #include <arpa/inet.h>
 #include <sys/epoll.h>
 #include <sys/socket.h>
-#include "/home/layta/Desktop/debug_API/C/debug.h" // For LASSERT()
+
+#define LASSERT(condition, message, ...) \
+    do \
+    { \
+        if(!(condition)) \
+        { \
+            fprintf(stderr, "[*] Process terminated! LASSERT(); failed!\nCondition\t: {%s}\nFunction\t: {%s}\nFailed in file\t: {%s}\nAt line \t: {%d}\n", #condition, __func__, __FILE__, __LINE__);\
+            fprintf(stderr, message, ##__VA_ARGS__); \
+            exit(1); \
+        } \
+    } while(0) \
 
 // Epoll sheet:
 #define MAX_EVENTS 100
